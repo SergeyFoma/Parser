@@ -3,22 +3,24 @@ import requests
 import lxml
 from datetime import datetime
 
+
 now=datetime.now()
-print(now.strftime("%d.%m.%Y"))
+
+
 
 url = "http://127.0.0.1:8000/answer2/"
 response = requests.get(url)
-# print(response)
+
 bs=BeautifulSoup(response.text,'lxml')
-# print(soup)
+
 
 temp2=bs.find(class_='result').find('h2')
-with open('resultat.txt','a',encoding='UTF-8')as f:
-    f.write(f'{temp2.text}\n')
+
+with open('resultat.txt','w+',encoding='UTF-8')as f:
+    f.write(f'{now.strftime("%d.%m.%Y")}\n{temp2.text}\n')
 
 temp3=bs.find(class_='result').find_all('p')
 for x in temp3:
-    print(x.text)
     with open('resultat.txt','a',encoding='UTF-8')as f:
         f.write(f'{x.text}\n')
 
